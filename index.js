@@ -84,4 +84,23 @@ MyArray.prototype.map = function (callback) {
 	return newArr;
 };
 
+MyArray.prototype.filter = function (callback) {
+	const thisArg = arguments.length !== 1 ? arguments[1] : undefined;
+
+	const myArr = new MyArray();
+	const length = this.length;
+	let count = 0;
+
+	for (let i = 0; i < length; i++) {
+		if (this[i] === undefined) continue;
+
+		if (callback.call(thisArg, this[i], i, this)) {
+			myArr[i] = this[i];
+			count++;
+		}
+	}
+	myArr.length = count;
+	return myArr;
+};
+
 module.exports = MyArray;
