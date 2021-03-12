@@ -103,4 +103,26 @@ MyArray.prototype.filter = function (callback) {
 	return myArr;
 };
 
+MyArray.prototype.reduce = function (callback) {
+	const length = this.length;
+	let total;
+	let i = 0;
+
+	if (arguments.length === 1 && this.length === 0) throw new TypeError('Reduce of empty array without initial value');
+	if (arguments.length === 1 && this.length === 1) return this[0];
+	if (arguments.length === 1) {
+		total = this[0];
+		i = 1;
+	} else {
+		total = arguments[1];
+	}
+
+	for (i; i < length; i++) {
+		if (!(i in this)) continue;
+		total = callback(total, this[i], i, this);
+	}
+
+	return total;
+};
+
 module.exports = MyArray;
